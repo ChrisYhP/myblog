@@ -1,7 +1,7 @@
 ---
 title:  使用webhooks 在服务器自动部署hexo
 date: 2019-11-10 19:27:13
-tags: hexo|自动化部署|nginx
+tags: [hexo,自动化部署,nginx]
 categorys: hexo
 ---
 
