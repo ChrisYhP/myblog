@@ -1,12 +1,11 @@
 ---
 title:  使用webhooks 在服务器自动部署hexo
 date: 2019-11-10 19:27:13
-tags: hexo 自动化部署
+tags: hexo|自动化部署|nginx
 categorys: hexo
 ---
 
 
-#  使用webhooks 在服务器自动部署hexo
 ### 1. 配置nginx 根路径, 指向hexo生产的静态资源文件夹public
 
 ```js
