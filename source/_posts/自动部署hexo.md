@@ -6,7 +6,7 @@ categorys: hexo
 ---
 
 
-##### 1. 配置nginx 根路径, 指向hexo生产的静态资源文件夹public
+##### 配置nginx 根路径, 指向hexo生产的静态资源文件夹public
 
 ```js
 location / {
@@ -15,7 +15,7 @@ location / {
    }
 ```
 
-##### 2. 入口文件app.js 
+##### 入口文件app.js 
 
 ```js
 // 入口文件 app.js
@@ -31,7 +31,7 @@ http.createServer((req, res) => {
 
 ```
 
-##### 3. webhooks 
+##### webhooks 
 首先你需要在github上对应的项目setting里面填写webhooks信息,如下图:
 ![img](/images/github.png)
 
@@ -58,7 +58,7 @@ handler.on('push', e => {
 })
 ```
 
-##### 4. 检测到更新后执行的deploy.sh脚本
+##### 检测到更新后执行的deploy.sh脚本
 ```sh
    #! /bin/bash
    git pull
