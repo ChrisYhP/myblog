@@ -435,26 +435,24 @@ font:
   # Font settings for site title (.site-title).
   title:
     external: true
-    family: Lato
-    size: 18px
+    family:
+    size:
 
   # Font settings for headlines (<h1> to <h6>).
   headings:
     external: true
-    family: Lato
-    size: 14px
+    family:
+    size:
 
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: Lato
-    size: 14px
+    family:
 
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family: 
-    size: 12px
+    family:
 
 
 # ---------------------------------------------------------------
