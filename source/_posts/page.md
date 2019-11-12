@@ -65,3 +65,4 @@ handler.on('push', e => {
    hexo clean && hexo g
 ```
 5555
+222
