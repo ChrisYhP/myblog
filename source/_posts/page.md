@@ -7,13 +7,20 @@ categorys: hexo
 
 
 #  使用webhooks 在服务器自动部署hexo
+### 1. 配置nginx 根路径, 指向hexo生产的静态资源文件夹public
 
-### 1. 入口文件app.js 
+```js
+location / {
+      index index.html;
+      root  /public;
+   }
+```
+
+### 2. 入口文件app.js 
 
 ```js
 // 入口文件 app.js
 const http = require('http');
-const runHexo  = require('./runHexo');
 const handler = require('./webhooks');
 
 http.createServer((req, res) => {
@@ -23,31 +30,7 @@ http.createServer((req, res) => {
     })
 }).listen(3038);
 
-runHexo();
 ```
-
-### 2. runHexo.js 
-
-```js
-const { spawn } = require('child_process');
-
-function runHexo() {
-    // 跑hexo服务
-    const child = spawn('hexo', ['server', '-p 80'])
-
-    child.stdout.on('data', data => console.log(`stdout: ${data}`))
-
-    child.stderr.on('data', data => console.log(`stderr: ${data}`))
-
-    child.on('close', code => {
-        console.log(`child process exited witdh code: ${code}`);
-        runHexo();
-    })
-}
-
-module.exports = runHexo;
-```
-主要是因为hexo没有入口文件跑程序，所以我们自己加一个。
 
 ### 3. webhooks 
 首先你需要在github上对应的项目setting里面填写webhooks信息,如下图:
@@ -74,4 +57,11 @@ handler.on('push', e => {
     console.log(`receoved a push event, ${e.payload.repository.name}`);
     runGitShell('sh', ['./deploy.sh'], (txt) => console.log(txt));
 })
+```
+
+### 4. 检测到更新后执行的deploy.sh脚本
+```sh
+   #! /bin/bash
+   git pull
+   hexo clean && hexo g
 ```
