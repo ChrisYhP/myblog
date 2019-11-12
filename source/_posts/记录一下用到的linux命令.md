@@ -13,4 +13,3 @@ categorys: linux
 
 4. 复制文件: cp a.js b.js
 
-5: 

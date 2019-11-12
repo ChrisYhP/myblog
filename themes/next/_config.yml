@@ -245,7 +245,7 @@ excerpt_description: true
 # Use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
   enable: true
-  length: 150
+  length: 50
 
 # Read more button
 # If true, the read more button would be displayed in excerpt section.
@@ -430,13 +430,13 @@ font:
   global:
     external: true
     family: Lato
-    size: 14px
+    size: 0.75em
 
   # Font settings for site title (.site-title).
   title:
     external: true
-    family:
-    size:
+    family: SimHei, Verdana, sans-serif
+    size: 1em
 
   # Font settings for headlines (<h1> to <h6>).
   headings:
@@ -447,7 +447,7 @@ font:
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family:
+    family: SimHei, Verdana, sans-serif
 
   # Font settings for <code> and code blocks.
   codes:
