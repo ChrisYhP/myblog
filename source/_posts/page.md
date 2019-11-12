@@ -64,6 +64,3 @@ handler.on('push', e => {
    git pull
    hexo clean && hexo g
 ```
-5555
-222
-3333
