@@ -430,29 +430,31 @@ font:
   global:
     external: true
     family: Lato
-    size: 0.75em
+    size: 14px
 
   # Font settings for site title (.site-title).
   title:
     external: true
-    family: SimHei, Verdana, sans-serif
-    size: 1em
+    family: Lato
+    size: 18px
 
   # Font settings for headlines (<h1> to <h6>).
   headings:
     external: true
-    family:
-    size:
+    family: Lato
+    size: 14px
 
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: SimHei, Verdana, sans-serif
+    family: Lato
+    size: 14px
 
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family:
+    family: 
+    size: 12px
 
 
 # ---------------------------------------------------------------
