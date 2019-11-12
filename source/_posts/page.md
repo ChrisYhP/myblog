@@ -33,7 +33,7 @@ http.createServer((req, res) => {
 
 ### 3. webhooks 
 首先你需要在github上对应的项目setting里面填写webhooks信息,如下图:
-![img](../images/github.png)
+![img](/images/github.png)
 
 ip和端口填服务器的ip和监听webhooks的端口
 
@@ -64,3 +64,4 @@ handler.on('push', e => {
    git pull
    hexo clean && hexo g
 ```
+5555
