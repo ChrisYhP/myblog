@@ -4,11 +4,11 @@ date: 2019-11-14 20:26:06
 tags: ['javascript', '异常处理', '翻译']
 categorys: '前端'
 ---
-&emsp;&emsp;
-一般而言，错误处理在Javascript里面并不是一个很复杂的主题，但是当不同的错误出现在应用里面，让应用崩溃，留下一脸困惑的用户时却非常有用...
+&emsp;
+  一般而言，错误处理在Javascript里面并不是一个很复杂的主题，但是当不同的错误出现在应用里面，让应用崩溃，留下一脸困惑的用户时却非常有用...
 
-&emsp;&emsp;
-如果你想保护程序免受可能的错误的影响，你可以为这些错误写一部分代码，如果错误发生，处理他们并且发生一些提示语给用户。
+&emsp;
+  如果你想保护程序免受可能的错误的影响，你可以为这些错误写一部分代码，如果错误发生，处理他们并且发生一些提示语给用户。
 
 &emsp;&emsp;
 这些都可以使用try/catch代码块或者Promise对象的.catch方法来处理，到目前为止还不错。在这篇文章里，我们将深入地将Javascript应用错误处理理论知识付诸实践。下面让我们开始吧。
@@ -40,3 +40,48 @@ class LoginPage extends Vue {
 ```
 
 上面的实现方案是正确的，看起来不错。
+
++ 我们发起请求，等待response(token)
++ 如果没有错误 -> 处理response
++ 如果在loginUser里面捕捉到error -> 进入catch代码块处理错误。
+  
+一切看起来都很简单。
+
+但是当我们的应用变得更复杂，它包含很多API请求和其他能够抛出错误的代码时会发生什么?
+好吧，他们看起来像这样:
+
+```js
+@Component
+class App extends Vue {
+  // ...
+  decodeData(data) {
+    try {
+      this.decodedData = atob(data) // can throw DOMException
+    } catch(error) {
+      Toast.error(error.message)
+    }
+  }
+  async getData() {
+    try {
+      this.data = await api.getData() // can throw Error
+    } catch(error) {
+      Toast.error(error.message)
+    }
+  }
+}
+```
+```js
+@Component
+class LoginPage extends Vue {
+  // ...
+  async loginUser() {
+    try {
+      const token = await api.loginUser(this.email, this.password)
+      handleLogin(token)
+    } catch(error) {
+      Toast.error(error.message)
+    }
+  }
+}
+```
+如你所见，很多try/catch代码块让本来漂亮的代码变得丑陋，重复
