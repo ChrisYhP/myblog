@@ -218,3 +218,94 @@ export default class App extends Vue {
 启动App：
 
 ![img](/images/catch.png)
+
+它起作用了！现在同步和异步的错误都被正确的处理了，这些仅仅需要一个注解。
+你也可以使用在常规的Promise,它也可以:
+```js
+@Component
+export default class App extends Vue {
+  @Catch
+  created() {
+    return api.getData() // throws Error
+      .then(data => ...) 
+  }
+}
+```
+现在我们的decorator有一个异常处理程序，但这个方案扩展性不是太好。所以，我们需要创建一个可以注册通用处理程序的store，让decorator可以调用这个处理程序:
+```js
+export const catchDecoratorStore = {
+    handler: null,
+    setHandler(handler) {
+        this.handler = handler
+    }
+}
+
+function Catch(target, key, descriptor) {
+    const originalMethod = descriptor.value
+
+    descriptor.value = async function(...args) {
+        try {
+            return await originalMethod.apply(this, args)
+        } catch (error) {
+            const { handler } = catchDecoratorStore
+
+            if (handler && typeof handler === 'function') 
+                return handler()
+
+            console.warn(error.message) // default handler
+        }
+    }
+
+    return descriptor
+}
+
+export default Catch
+```
+这里我们创建了一个带有setHandler方法的catchDecoratorStore对象，该方法将handler赋值给handler属性。然后在cactch代码块中检查handler是否存在，如果存在则调用它，否则展示默认console信息。
+
+现在我们可以使用它，跟使用Vue全局error handler非常的相似。
+```js
+import Catch, { catchDecoratorStore } from './catchDecorator'
+
+catchDecoratorStore.setHandler(error => Toast.error(error.message))
+
+@Component
+export default class App extends Vue {
+  @Catch
+  async created() {
+    const data = await api.getData() // throws Error
+    // ...
+  }
+}
+```
+快结束了。它现在是一个很完整的解决方案了，你可以使用decorator处理任何的方法，event handler和生命周期函数。
+
+但是，如果有一些方法需要一个独立的错误处理逻辑呢？这种情况下我们需要为decorator添加一个额外的功能——接收参数的能力，为了像这样使用它：@Catch(handler)
+
+更新后的版本:
+```js
+function Catch(localHandler) {
+    return function(target, key, descriptor) {
+        const originalMethod = descriptor.value
+
+        descriptor.value = async function(...args) {
+            try {
+                return await originalMethod.apply(this, args)
+            } catch (error) {
+                const { handler } = catchDecoratorStore
+                
+                if (localHandler) {
+                    localHandler.call(null, error, this)
+                } else if(handler) {
+                    handler.call(null, error, this)
+                } else {
+                    console.warn(error.message)
+                }
+            }
+        }
+        return descriptor
+    }
+}
+```
+
+
