@@ -13,3 +13,5 @@ categorys: linux
 
 4. 复制文件: cp a.js b.js
 
+5. 设置开机启动项: 编辑rc.loacl脚本 
+
